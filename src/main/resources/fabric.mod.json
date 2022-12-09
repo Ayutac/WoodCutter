@@ -8,15 +8,16 @@
   "name": "Woodcutter",
   "description": "Woodcutter cuts wood",
   "authors": [
-    "Tfarcenim"
+    "Tfarcenim",
+    "Ayutac"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Tfarcenim/WoodCutter",
+    "sources": "https://github.com/Tfarcenim/WoodCutter"
   },
 
   "license": "CC0-1.0",
-  "icon": "",
+  "icon": "assets/woodcutter/textures/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -28,10 +29,7 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.7.4",
+    "fabricloader": ">=0.14.11",
     "fabric": "*"
-  },
-  "suggests": {
-    "flamingo": "*"
   }
 }
