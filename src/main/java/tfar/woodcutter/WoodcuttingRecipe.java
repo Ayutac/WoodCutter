@@ -10,10 +10,10 @@ import net.minecraft.world.World;
 
 public class WoodcuttingRecipe extends CuttingRecipe {
 
-	public static final RecipeType<WoodcuttingRecipe> TYPE = RecipeType.register(WoodCutter.MODID +":"+ WoodCutter.MODID);
+	public static final RecipeType<WoodcuttingRecipe> TYPE = RecipeType.register(Woodcutter.MOD_ID +":"+ Woodcutter.MOD_ID);
 
 	public WoodcuttingRecipe(Identifier id, String group, Ingredient input, ItemStack output) {
-		super(TYPE, WoodCutter.WOODCUTTING, id, group, input, output);
+		super(TYPE, Woodcutter.WOODCUTTING_SERIALIZER, id, group, input, output);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class WoodcuttingRecipe extends CuttingRecipe {
 
 	@Override
 	public ItemStack createIcon() {
-		return new ItemStack(WoodCutter.woodcutter);
+		return new ItemStack(Woodcutter.WOODCUTTER);
 	}
 
 	public static class Serializer2<T extends CuttingRecipe> extends Serializer<T> {

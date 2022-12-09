@@ -18,7 +18,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
-public class WoodCutterContainer extends ScreenHandler {
+public class WoodcutterScreenHandler extends ScreenHandler {
 	private final ScreenHandlerContext context;
 	private final Property selectedRecipe;
 	private final World world;
@@ -31,12 +31,12 @@ public class WoodCutterContainer extends ScreenHandler {
 	public final Inventory input;
 	private final CraftingResultInventory output;
 
-	public WoodCutterContainer(int syncId, PlayerInventory playerInventory) {
+	public WoodcutterScreenHandler(int syncId, PlayerInventory playerInventory) {
 		this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
 	}
 
-	public WoodCutterContainer(int syncId, PlayerInventory playerInventory, final ScreenHandlerContext context) {
-		super(WoodCutter.woodCutterContainer, syncId);
+	public WoodcutterScreenHandler(int syncId, PlayerInventory playerInventory, final ScreenHandlerContext context) {
+		super(Woodcutter.WOODCUTTER_SCREEN_HANDLER, syncId);
 		this.selectedRecipe = Property.create();
 		this.availableRecipes = Lists.newArrayList();
 		this.inputStack = ItemStack.EMPTY;
@@ -45,8 +45,8 @@ public class WoodCutterContainer extends ScreenHandler {
 		this.input = new SimpleInventory(1) {
 			public void markDirty() {
 				super.markDirty();
-				WoodCutterContainer.this.onContentChanged(this);
-				WoodCutterContainer.this.contentsChangedListener.run();
+				WoodcutterScreenHandler.this.onContentChanged(this);
+				WoodcutterScreenHandler.this.contentsChangedListener.run();
 			}
 		};
 		this.output = new CraftingResultInventory();
@@ -59,17 +59,17 @@ public class WoodCutterContainer extends ScreenHandler {
 			}
 
 			public void onTakeItem(PlayerEntity player, ItemStack stack) {
-				ItemStack itemStack = WoodCutterContainer.this.inputSlot.takeStack(1);
+				ItemStack itemStack = WoodcutterScreenHandler.this.inputSlot.takeStack(1);
 				if (!itemStack.isEmpty()) {
-					WoodCutterContainer.this.populateResult();
+					WoodcutterScreenHandler.this.populateResult();
 				}
 
 				stack.getItem().onCraft(stack, player.world, player);
 				context.run((world, blockPos) -> {
 					long l = world.getTime();
-					if (WoodCutterContainer.this.lastTakeTime != l) {
+					if (WoodcutterScreenHandler.this.lastTakeTime != l) {
 						world.playSound(null, blockPos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.BLOCKS, 1.0F, 1.0F);
-						WoodCutterContainer.this.lastTakeTime = l;
+						WoodcutterScreenHandler.this.lastTakeTime = l;
 					}
 
 				});
@@ -108,7 +108,7 @@ public class WoodCutterContainer extends ScreenHandler {
 	}
 
 	public boolean canUse(PlayerEntity player) {
-		return canUse(this.context, player, WoodCutter.woodcutter);
+		return canUse(this.context, player, Woodcutter.WOODCUTTER);
 	}
 
 	public boolean onButtonClick(PlayerEntity player, int id) {
@@ -155,7 +155,7 @@ public class WoodCutterContainer extends ScreenHandler {
 	}
 
 	public ScreenHandlerType<?> getType() {
-		return WoodCutter.woodCutterContainer;
+		return Woodcutter.WOODCUTTER_SCREEN_HANDLER;
 	}
 
 	public void setContentsChangedListener(Runnable runnable) {

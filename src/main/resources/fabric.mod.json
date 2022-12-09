@@ -22,10 +22,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "tfar.woodcutter.WoodCutter"
+      "tfar.woodcutter.Woodcutter"
     ],
     "client" : [
-      "tfar.woodcutter.WoodCutter"
+      "tfar.woodcutter.Woodcutter"
     ]
   },
   "depends": {

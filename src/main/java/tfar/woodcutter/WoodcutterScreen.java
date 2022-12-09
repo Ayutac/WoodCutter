@@ -14,14 +14,14 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
-public class WoodCutterScreen extends HandledScreen<WoodCutterContainer> {
+public class WoodcutterScreen extends HandledScreen<WoodcutterScreenHandler> {
 	private static final Identifier TEXTURE = new Identifier("textures/gui/container/stonecutter.png");
 	private float scrollAmount;
 	private boolean mouseClicked;
 	private int scrollOffset;
 	private boolean canCraft;
 
-	public WoodCutterScreen(WoodCutterContainer handler, PlayerInventory inventory, Text title) {
+	public WoodcutterScreen(WoodcutterScreenHandler handler, PlayerInventory inventory, Text title) {
 		super(handler, inventory, title);
 		handler.setContentsChangedListener(this::onInventoryChange);
 		--this.titleY;

@@ -16,11 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class WoodCutterBlock extends StonecutterBlock {
+public class WoodcutterBlock extends StonecutterBlock {
 
 	private static final MutableText TITLE = Text.translatable("container.woodcutter");
 
-	public WoodCutterBlock(AbstractBlock.Settings settings) {
+	public WoodcutterBlock(AbstractBlock.Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
 	}
@@ -30,12 +30,12 @@ public class WoodCutterBlock extends StonecutterBlock {
 			return ActionResult.SUCCESS;
 		} else {
 			player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-			player.incrementStat(WoodCutter.INTERACT_WITH_WOODCUTTER);
+			player.incrementStat(Woodcutter.INTERACT_WITH_WOODCUTTER);
 			return ActionResult.CONSUME;
 		}
 	}
 
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-		return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) -> new WoodCutterContainer(i, playerInventory, ScreenHandlerContext.create(world, pos)), TITLE);
+		return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) -> new WoodcutterScreenHandler(i, playerInventory, ScreenHandlerContext.create(world, pos)), TITLE);
 	}
 }
