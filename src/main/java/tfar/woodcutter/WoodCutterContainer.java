@@ -58,7 +58,7 @@ public class WoodCutterContainer extends ScreenHandler {
 				return false;
 			}
 
-			public ItemStack onTakeItem(PlayerEntity player, ItemStack stack) {
+			public void onTakeItem(PlayerEntity player, ItemStack stack) {
 				ItemStack itemStack = WoodCutterContainer.this.inputSlot.takeStack(1);
 				if (!itemStack.isEmpty()) {
 					WoodCutterContainer.this.populateResult();
@@ -73,7 +73,7 @@ public class WoodCutterContainer extends ScreenHandler {
 					}
 
 				});
-				return super.onTakeItem(player, stack);
+				super.onTakeItem(player, stack);
 			}
 		});
 
@@ -166,7 +166,7 @@ public class WoodCutterContainer extends ScreenHandler {
 		return slot.inventory != this.output && super.canInsertIntoSlot(stack, slot);
 	}
 
-	public ItemStack transferSlot(PlayerEntity player, int index) {
+	public ItemStack quickMove(PlayerEntity player, int index) {
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasStack()) {
@@ -179,7 +179,7 @@ public class WoodCutterContainer extends ScreenHandler {
 					return ItemStack.EMPTY;
 				}
 
-				slot.onStackChanged(itemStack2, itemStack);
+				slot.onQuickTransfer(itemStack2, itemStack);
 			} else if (index == 0) {
 				if (!this.insertItem(itemStack2, 2, 38, false)) {
 					return ItemStack.EMPTY;
@@ -215,8 +215,6 @@ public class WoodCutterContainer extends ScreenHandler {
 	public void close(PlayerEntity player) {
 		super.close(player);
 		this.output.removeStack(1);
-		this.context.run((world, blockPos) -> {
-			this.dropInventory(player, player.world, this.input);
-		});
+		this.context.run((world, blockPos) -> this.dropInventory(player, this.input));
 	}
 }

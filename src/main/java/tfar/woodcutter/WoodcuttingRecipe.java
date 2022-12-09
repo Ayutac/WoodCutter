@@ -16,11 +16,13 @@ public class WoodcuttingRecipe extends CuttingRecipe {
 		super(TYPE, WoodCutter.WOODCUTTING, id, group, input, output);
 	}
 
+	@Override
 	public boolean matches(Inventory inv, World world) {
 		return this.input.test(inv.getStack(0));
 	}
 
-	public ItemStack getRecipeKindIcon() {
+	@Override
+	public ItemStack createIcon() {
 		return new ItemStack(WoodCutter.woodcutter);
 	}
 
