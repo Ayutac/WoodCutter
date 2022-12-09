@@ -3,11 +3,11 @@ package tfar.woodcutter;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.recipe.RecipeSerializer;
@@ -33,13 +33,12 @@ public class Woodcutter implements ModInitializer, ClientModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// initialize the class
-		WoodcuttingRecipe.TYPE.hashCode();
+		WoodcuttingRecipe.load();
 
 		Registry.register(Registries.BLOCK,ID, WOODCUTTER);
 		Registry.register(Registries.ITEM,ID,new BlockItem(WOODCUTTER,new FabricItemSettings()));
 		Registry.register(Registries.SCREEN_HANDLER,ID, WOODCUTTER_SCREEN_HANDLER);
-		RecipeSerializer.register(Woodcutter.MOD_ID +":woodcutting", WOODCUTTING_SERIALIZER);
+		RecipeSerializer.register(MOD_ID +":woodcutting", WOODCUTTING_SERIALIZER);
 	}
 
 	private static Identifier registerStat(String string, StatFormatter statFormatter) {
@@ -52,6 +51,6 @@ public class Woodcutter implements ModInitializer, ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		BlockRenderLayerMap.INSTANCE.putBlock(WOODCUTTER, RenderLayer.getCutout());
-		ScreenRegistry.register(WOODCUTTER_SCREEN_HANDLER, WoodcutterScreen::new);
+		HandledScreens.register(WOODCUTTER_SCREEN_HANDLER, WoodcutterScreen::new);
 	}
 }

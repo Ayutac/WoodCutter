@@ -26,6 +26,10 @@ public class WoodcuttingRecipe extends CuttingRecipe {
 		return new ItemStack(Woodcutter.WOODCUTTER);
 	}
 
+	public static void load() {
+		/* Loads the class. */
+	}
+
 	public static class Serializer2<T extends CuttingRecipe> extends Serializer<T> {
 
 		public Serializer2(RecipeFactory<T> recipeFactory) {
