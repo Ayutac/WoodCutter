@@ -33,6 +33,9 @@ public class WoodCutter implements ModInitializer, ClientModInitializer {
 
 	@Override
 	public void onInitialize() {
+		// initialize the class
+		WoodcuttingRecipe.TYPE.hashCode();
+
 		woodcutter = Registry.register(Registries.BLOCK,ID,new WoodCutterBlock(AbstractBlock.Settings.of(Material.WOOD).strength(2.5F).sounds(BlockSoundGroup.WOOD)));
 		Registry.register(Registries.ITEM,ID,new BlockItem(woodcutter,new FabricItemSettings()));
 		woodCutterContainer = Registry.register(Registries.SCREEN_HANDLER,ID, new ScreenHandlerType<>(WoodCutterContainer::new));
