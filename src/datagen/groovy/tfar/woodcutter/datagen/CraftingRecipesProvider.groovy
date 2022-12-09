@@ -9,10 +9,12 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.book.RecipeCategory
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import tfar.woodcutter.Woodcutter
 
+import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import java.util.function.Function
 
@@ -20,14 +22,14 @@ class CraftingRecipesProvider extends FabricRecipeProvider {
 
     protected Consumer<RecipeJsonProvider> exporter
 
-    CraftingRecipesProvider(FabricDataOutput output) {
+    CraftingRecipesProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output)
     }
 
     @Override
     void generate(Consumer<RecipeJsonProvider> exporter) {
         this.exporter = exporter
-        offerSlabRecipeWoodcutter(Items.ACACIA_PLANKS, Items.ACACIA_SLAB, 2)
+        offerSlabRecipeWoodcutter(Items.ACACIA_PLANKS, Items.ACACIA_SLAB)
     }
 
     def static createWoodcutterRecipe(def input, ItemConvertible output, int outputAmount = 1, RecipeCategory category = RecipeCategory.BUILDING_BLOCKS) {
@@ -35,7 +37,7 @@ class CraftingRecipesProvider extends FabricRecipeProvider {
                 .criterion(getCriterionName(input), getCriterionConditions(input))
     }
 
-    def offerSlabRecipeWoodcutter(def material, ItemConvertible output, prefix = "") {
+    def offerSlabRecipeWoodcutter(def material, ItemConvertible output, String prefix = "") {
         createWoodcutterRecipe(material, output, 2)
                 .offerTo(this.exporter, new Identifier(Woodcutter.MOD_ID, materialTypeString(prefix, material, "slab", CraftingRecipesProvider::getName) + "_woodcutter"))
     }
