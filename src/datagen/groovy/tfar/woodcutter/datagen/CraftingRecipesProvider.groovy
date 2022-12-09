@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.advancement.criterion.CriterionConditions
 import net.minecraft.data.server.recipe.RecipeJsonProvider
 import net.minecraft.data.server.recipe.SingleItemRecipeJsonBuilder
+import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
@@ -29,7 +30,19 @@ class CraftingRecipesProvider extends FabricRecipeProvider {
     @Override
     void generate(Consumer<RecipeJsonProvider> exporter) {
         this.exporter = exporter
-        offerSlabRecipeWoodcutter(Items.ACACIA_PLANKS, Items.ACACIA_SLAB)
+        [
+                (Items.ACACIA_PLANKS) : Items.ACACIA_SLAB,
+                (Items.BIRCH_PLANKS) : Items.BIRCH_SLAB,
+                (Items.DARK_OAK_PLANKS) : Items.DARK_OAK_SLAB,
+                (Items.JUNGLE_PLANKS) : Items.JUNGLE_SLAB,
+                (Items.OAK_PLANKS) : Items.OAK_SLAB,
+                (Items.MANGROVE_PLANKS) : Items.MANGROVE_SLAB,
+                (Items.SPRUCE_PLANKS) : Items.SPRUCE_SLAB,
+                (Items.CRIMSON_PLANKS) : Items.CRIMSON_SLAB,
+                (Items.WARPED_PLANKS) : Items.WARPED_SLAB
+        ].each {planks, slab ->
+            offerSlabRecipeWoodcutter(planks, slab)
+        }
     }
 
     def static createWoodcutterRecipe(def input, ItemConvertible output, int outputAmount = 1, RecipeCategory category = RecipeCategory.BUILDING_BLOCKS) {
