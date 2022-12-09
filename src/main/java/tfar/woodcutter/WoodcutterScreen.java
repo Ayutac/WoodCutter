@@ -69,20 +69,20 @@ public class WoodcutterScreen extends HandledScreen<WoodcutterScreenHandler> {
 
 	}
 
-	private void renderRecipeBackground(MatrixStack matrixStack, int i, int j, int k, int l, int m) {
-		for(int n = this.scrollOffset; n < m && n < this.handler.getAvailableRecipeCount(); ++n) {
-			int o = n - this.scrollOffset;
-			int p = k + o % 4 * 16;
-			int q = o / 4;
-			int r = l + q * 18 + 2;
-			int s = this.backgroundHeight;
-			if (n == this.handler.getSelectedRecipe()) {
-				s += 18;
-			} else if (i >= p && j >= r && i < p + 16 && j < r + 18) {
-				s += 36;
+	private void renderRecipeBackground(MatrixStack matrices, int mouseX, int mouseY, int x, int y, int scrollOffset) {
+		for(int i = this.scrollOffset; i < scrollOffset && i < handler.getAvailableRecipeCount(); ++i) {
+			int j = i - this.scrollOffset;
+			int k = x + j % 4 * 16;
+			int l = j / 4;
+			int m = y + l * 18 + 2;
+			int n = this.backgroundHeight;
+			if (i == handler.getSelectedRecipe()) {
+				n += 18;
+			} else if (mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18) {
+				n += 36;
 			}
 
-			this.drawTexture(matrixStack, p, r - 1, 0, s, 16, 18);
+			this.drawTexture(matrices, k, m - 1, 0, n, 16, 18);
 		}
 
 	}
@@ -109,11 +109,11 @@ public class WoodcutterScreen extends HandledScreen<WoodcutterScreenHandler> {
 
 			for(int l = this.scrollOffset; l < k; ++l) {
 				int m = l - this.scrollOffset;
-				double d = mouseX - (i + m % 4d * 16);
-				double e = mouseY - (j + m / 4d * 18);
-				if (d >= 0.0D && e >= 0.0D && d < 16.0D && e < 18.0D && this.handler.onButtonClick(this.client.player, l)) {
+				double d = mouseX - (double) (i + m % 4 * 16);
+				double e = mouseY - (double) (j + m / 4 * 18);
+				if (d >= 0.0 && e >= 0.0 && d < 16.0 && e < 18.0 && handler.onButtonClick(this.client.player, l)) {
 					MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
-					this.client.interactionManager.clickButton(this.handler.syncId, l);
+					this.client.interactionManager.clickButton(handler.syncId, l);
 					return true;
 				}
 			}

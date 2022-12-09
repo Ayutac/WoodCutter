@@ -9,10 +9,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.Property;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -59,16 +56,17 @@ public class WoodcutterScreenHandler extends ScreenHandler {
 			}
 
 			public void onTakeItem(PlayerEntity player, ItemStack stack) {
+				stack.onCraft(player.world, player, stack.getCount());
+				WoodcutterScreenHandler.this.output.unlockLastRecipe(player);
 				ItemStack itemStack = WoodcutterScreenHandler.this.inputSlot.takeStack(1);
 				if (!itemStack.isEmpty()) {
 					WoodcutterScreenHandler.this.populateResult();
 				}
 
-				stack.getItem().onCraft(stack, player.world, player);
-				context.run((world, blockPos) -> {
+				context.run((world, pos) -> {
 					long l = world.getTime();
 					if (WoodcutterScreenHandler.this.lastTakeTime != l) {
-						world.playSound(null, blockPos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						world.playSound((PlayerEntity)null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						WoodcutterScreenHandler.this.lastTakeTime = l;
 					}
 
@@ -77,15 +75,15 @@ public class WoodcutterScreenHandler extends ScreenHandler {
 			}
 		});
 
-		int k;
-		for(k = 0; k < 3; ++k) {
+		int i;
+		for(i = 0; i < 3; ++i) {
 			for(int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInventory, j + k * 9 + 9, 8 + j * 18, 84 + k * 18));
+				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
 
-		for(k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
+		for(i = 0; i < 9; ++i) {
+			this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
 		}
 
 		this.addProperty(this.selectedRecipe);
