@@ -1,8 +1,0 @@
-{
-  "type": "woodcutter:woodcutting",
-  "ingredient": {
-    "tag": "minecraft:planks"
-  },
-  "result": "minecraft:stick",
-  "count": 4
-}

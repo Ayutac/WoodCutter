@@ -1,8 +1,0 @@
-{
-  "type": "woodcutter:woodcutting",
-  "ingredient": {
-    "item": "minecraft:acacia_log"
-  },
-  "result": "minecraft:acacia_wood",
-  "count": 1
-}
